@@ -1,0 +1,230 @@
+::ng-deep trustie-component {
+
+
+  @import "~bootstrap/scss/functions";
+  @import "./variables";
+  @import "~bootstrap/scss/variables";
+  @import "~bootstrap/scss/mixins";
+  @import "~bootstrap/scss/utilities";
+
+
+  .wrapper {
+    // Note: Custom variable values only support SassScript inside `#{}`.
+
+    // Colors
+    //
+    // Generate palettes for full colors, grays, and theme colors.
+
+    @each $color, $value in $colors {
+      --#{$variable-prefix}#{$color}: #{$value};
+    }
+
+    @each $color, $value in $grays {
+      --#{$variable-prefix}gray-#{$color}: #{$value};
+    }
+
+    @each $color, $value in $theme-colors {
+      --#{$variable-prefix}#{$color}: #{$value};
+    }
+
+    @each $color, $value in $theme-colors-rgb {
+      --#{$variable-prefix}#{$color}-rgb: #{$value};
+    }
+
+    --#{$variable-prefix}white-rgb: #{to-rgb($white)};
+    --#{$variable-prefix}black-rgb: #{to-rgb($black)};
+    --#{$variable-prefix}body-color-rgb: #{to-rgb($body-color)};
+    --#{$variable-prefix}body-bg-rgb: #{to-rgb($body-bg)};
+
+    // Fonts
+
+    // Note: Use `inspect` for lists so that quoted items keep the quotes.
+    // See https://github.com/sass/sass/issues/2383#issuecomment-336349172
+    --#{$variable-prefix}font-sans-serif: #{inspect($font-family-sans-serif)};
+    --#{$variable-prefix}font-monospace: #{inspect($font-family-monospace)};
+    --#{$variable-prefix}gradient: #{$gradient};
+
+    // Root and body
+    // stylelint-disable custom-property-empty-line-before
+    // scss-docs-start root-body-variables
+    @if $font-size-root != null {
+      --#{$variable-prefix}root-font-size: #{$font-size-root};
+    }
+    --#{$variable-prefix}body-font-family: #{$font-family-base};
+    --#{$variable-prefix}body-font-size: #{$font-size-base};
+    --#{$variable-prefix}body-font-weight: #{$font-weight-base};
+    --#{$variable-prefix}body-line-height: #{$line-height-base};
+    --#{$variable-prefix}body-color: #{$body-color};
+    @if $body-text-align != null {
+      --#{$variable-prefix}body-text-align: #{$body-text-align};
+    }
+    --#{$variable-prefix}body-bg: #{$body-bg};
+    // scss-docs-end root-body-variables
+    // stylelint-enable custom-property-empty-line-before
+  }
+
+
+  .wrapper {
+    font-family: var(--#{$variable-prefix}body-font-family);
+    @include font-size(var(--#{$variable-prefix}body-font-size));
+    font-weight: var(--#{$variable-prefix}body-font-weight);
+    line-height: var(--#{$variable-prefix}body-line-height);
+    color: var(--#{$variable-prefix}body-color);
+    text-align: var(--#{$variable-prefix}body-text-align);
+    //background-color: #fff; // 2
+    -webkit-text-size-adjust: 100%; // 3
+    -webkit-tap-highlight-color: rgba($black, 0); // 4
+    max-width: 100%;
+    margin: auto;
+    position: relative;
+    overflow: hidden;
+  }
+
+
+  @mixin make-grid-columns($columns: $grid-columns, $gutter: $grid-gutter-width, $breakpoints: $grid-breakpoints) {
+    @each $breakpoint in map-keys($breakpoints) {
+      $infix: breakpoint-infix($breakpoint, $breakpoints);
+
+      @include media-breakpoint-up($breakpoint, $breakpoints) {
+        // Provide basic `.col-{bp}` classes for equal-width flexbox columns
+        .col#{$infix} {
+          flex: 1 0 0%; // Flexbugs #4: https://github.com/philipwalton/flexbugs#flexbug-4
+        }
+
+        .row-cols#{$infix}-auto > * {
+          @include make-col-auto();
+        }
+
+        @if $grid-row-columns > 0 {
+          @for $i from 1 through $grid-row-columns {
+            .row-cols#{$infix}-#{$i} {
+              @include row-cols($i);
+            }
+          }
+        }
+
+        .col#{$infix}-auto {
+          @include make-col-auto();
+        }
+
+        @if $columns > 0 {
+          @for $i from 1 through $columns {
+            .col#{$infix}-#{$i} {
+              @include make-col($i, $columns);
+            }
+
+            .row .col#{$infix}-#{$i} {
+              @include make-col($i, $columns);
+            }
+          }
+
+          // `$columns - 1` because offsetting by the width of an entire row isn't possible
+          @for $i from 0 through ($columns - 1) {
+            @if not ($infix == "" and $i == 0) { // Avoid emitting useless .offset-0
+              .offset#{$infix}-#{$i} {
+                @include make-col-offset($i, $columns);
+              }
+            }
+          }
+        }
+
+        // Gutters
+        //
+        // Make use of `.g-*`, `.gx-*` or `.gy-*` utilities to change spacing between the columns.
+        @each $key, $value in $gutters {
+          .row.g#{$infix}-#{$key},
+          .row.gx#{$infix}-#{$key} {
+            --#{$variable-prefix}gutter-x: #{$value};
+          }
+
+          .row.g#{$infix}-#{$key},
+          .row.gy#{$infix}-#{$key} {
+            --#{$variable-prefix}gutter-y: #{$value};
+          }
+
+          .row.g#{$infix}-#{$key},
+          .row.gy#{$infix}-#{$key} {
+            --#{$variable-prefix}gutter-y: #{$value};
+          }
+        }
+      }
+    }
+  }
+
+  // 4. Include any optional Bootstrap components as you like
+
+  // Layout & components
+  @import "~bootstrap/scss/root";
+  @import "~bootstrap/scss/reboot";
+  @import "~bootstrap/scss/type";
+  @import "~bootstrap/scss/images";
+  @import "~bootstrap/scss/containers";
+  @import "~bootstrap/scss/grid";
+  @import "~bootstrap/scss/tables";
+  @import "~bootstrap/scss/forms";
+  @import "~bootstrap/scss/buttons";
+  @import "~bootstrap/scss/transitions";
+  @import "~bootstrap/scss/dropdown";
+  @import "~bootstrap/scss/button-group";
+  @import "~bootstrap/scss/nav";
+  @import "~bootstrap/scss/navbar";
+  @import "~bootstrap/scss/card";
+  @import "~bootstrap/scss/accordion";
+  @import "~bootstrap/scss/breadcrumb";
+  @import "~bootstrap/scss/pagination";
+  @import "~bootstrap/scss/badge";
+  @import "~bootstrap/scss/alert";
+  @import "~bootstrap/scss/progress";
+  @import "~bootstrap/scss/list-group";
+  @import "~bootstrap/scss/close";
+  @import "~bootstrap/scss/toasts";
+  @import "~bootstrap/scss/modal";
+  @import "~bootstrap/scss/tooltip";
+  @import "~bootstrap/scss/popover";
+  @import "~bootstrap/scss/carousel";
+  @import "~bootstrap/scss/spinners";
+  @import "~bootstrap/scss/offcanvas";
+  @import "~bootstrap/scss/placeholders";
+
+  // Helpers
+  @import "~bootstrap/scss/helpers";
+
+  // Utilities
+  @import "~bootstrap/scss/utilities/api";
+  @import "./bootswatch";
+
+  background: transparent;
+
+  .list-group-item {
+    padding: 0.8rem 0.8rem;
+  }
+
+  button {
+    touch-action: manipulation;
+  }
+
+  @media screen and (max-width: 768px) {
+    height:100%;
+
+    .wrapper {
+      position: absolute;
+      top:0;
+      left:0;
+      right:0;
+      width:100%;
+      height:100%;
+      background: #fff;
+
+      .chat-element {
+        background: #fff;
+        height:100%;
+      }
+
+      .main-chat-window {
+
+        background: #fff;
+      }
+    }
+  }
+
+}

@@ -1,0 +1,31 @@
+{
+  "name": "@medicaa/trustie",
+  "version": "0.0.3",
+  "private": false,
+  "peerDependencies": {
+    "@angular/common": "^13.0.0",
+    "@angular/core": "^13.0.0"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.4",
+    "@fortawesome/angular-fontawesome": "0.10",
+    "@fortawesome/fontawesome-svg-core": "^1.2.36",
+    "@fortawesome/free-solid-svg-icons": "^5.15.4",
+    "@matrix-org/olm": "^3.2.8",
+    "@types/matrix-js-sdk": "^11.0.1",
+    "@types/request": "^2.48.7",
+    "@zxing/browser": "^0.0.10",
+    "@zxing/library": "^0.18.6",
+    "@zxing/ngx-scanner": "^3.3.0",
+    "animejs": "^3.2.1",
+    "bootstrap": "^5.1.3",
+    "crypto": "^1.0.1",
+    "crypto-browserify": "^3.12.0",
+    "lamejs": "^1.2.1",
+    "matrix-js-sdk": "^15.3.0",
+    "mic-recorder-to-mp3": "^2.2.2",
+    "path": "^0.12.7",
+    "stream": "^0.0.2",
+    "tslib": "^2.3.0"
+  }
+}

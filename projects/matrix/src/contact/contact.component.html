@@ -1,0 +1,32 @@
+
+<div class="d-flex align-items-center px-3">
+
+  <div class="flex-grow-1">
+    <input [(ngModel)]="component.search" type="text" class="form-control my-3" placeholder="Chat suchen...">
+
+  </div>
+</div>
+<h5 class="px-3" *ngIf="contacts.length > 0">Kontakte</h5>
+
+<a class="list-group-item list-group-item-action border-0 "
+   *ngFor="let room of contacts"
+   [ngClass]="{'active': room.roomId == component.activeRoom}" (click)="component.changeRoom(room)">
+  <div class="d-flex align-items-start">
+    <div class="flex-grow-1 ms-2">
+      <fa-icon [icon]="['fas', 'users']" size="1x" *ngIf="component.getRoomMembers(room) > 2"></fa-icon>
+      <fa-icon [icon]="['fas', 'user']" size="1x" *ngIf="component.getRoomMembers(room) <= 2"></fa-icon>
+
+
+      {{room.name}}
+      <span
+        class="position-absolute top-50 end-0 translate-middle badge rounded-pill bg-danger "
+        *ngIf="room.getUnreadNotificationCount() > 0">
+               {{room.getUnreadNotificationCount()}}
+        <span class="visually-hidden">ungelesene Nachrichten</span>
+  </span>
+      <div class="small visually-hidden"><span class="fas fa-circle chat-online"></span>
+        Online
+      </div>
+    </div>
+  </div>
+</a>

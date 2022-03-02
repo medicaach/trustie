@@ -1,0 +1,662 @@
+<div class="wrapper" *ngIf="!hidden">
+  <audio class="video-element visually-hidden" id="local" #local></audio>
+  <audio class="video-element visually-hidden" id="remote" #remote></audio>
+
+  <div class=" trustie-element login-element " [ngClass]="loggedIn == true ? 'logged-in' : ''" #loginWindow>
+    <div class="row g-0">
+
+      <div class="left-login col-md-6 offset-md-3 d-flex align-items-center">
+        <div class="card-body p-4 p-lg-5 text-black">
+          <form (submit)="login()">
+            <div class="d-flex align-items-center mb-3 pb-1">
+              <fa-icon [icon]="faPeopleArrows" size="2x" class="me-2"></fa-icon>
+              <span class="h1 fw-bold mb-0">Trustie</span>
+            </div>
+
+            <div class="midata" *ngIf="!serverLogin">
+              <p class="fw-normal" style="letter-spacing: 1px;">Mit einem bestehenden MIDATA Account anmelden /
+                registrieren:</p>
+
+              <a class="btn btn-primary btn-lg btn-block w-100"
+                 (click)="midataLogin()">
+                <small class="mb-3">Anmeldung mit</small> <br>
+                <img src="/midata.png" alt="MIDATA" class="w-75 mt-1 mb-1">
+              </a>
+              <hr>
+            </div>
+
+            <a class="btn btn-dark btn-block mb-4"
+               (click)="serverLogin = false" *ngIf="serverLogin">
+              <fa-icon [icon]="['fas', 'arrow-left']" size="1x" class="text-white"></fa-icon>
+              Zurück zur Anmeldungswahl
+            </a>
+
+            <p class="fw-normal" style="letter-spacing: 1px;"><small>Mit einem bestehenden Server Account
+              anmelden:</small></p>
+
+
+            <a class="btn btn-light btn-sm  btn-block mb-4"
+               (click)="serverLogin = true; wrongLogin = false" *ngIf="!serverLogin">
+              Server Account Anmeldung
+            </a>
+            <div class="serverLogin" *ngIf="serverLogin">
+
+
+              <div class="form-outline mb-2">
+                <input [(ngModel)]="username" name="username" type="email" id="form2Example17"
+                       class="form-control " [ngClass]="wrongLogin ? 'is-invalid' : ''"/>
+                <label class="form-label" for="form2Example17">Benutzer</label>
+              </div>
+
+              <div class="form-outline ">
+                <input [(ngModel)]="password" name="password" type="password" id="form2Example27"
+                       class="form-control " [ngClass]="wrongLogin ? 'is-invalid' : ''"/>
+                <label class="form-label" for="form2Example27">Passwort</label>
+              </div>
+
+              <div class="pt-1 mb-2">
+                <button class="btn btn-primary btn-lg btn-block me-2 mt-2" type="submit">Anmelden</button>
+              </div>
+
+              <p class="wrong-login alert alert-danger" [ngClass]="wrongLogin ? 'd-block' : 'd-none'">Falsches Passwort
+                oder falscher Benutzername</p>
+
+
+              <a class="small text-muted" href="#!">Passwort vergessen?</a><br>
+
+            </div>
+
+            <button class="btn btn-link small text-muted p-0" type="button" (click)="dataagreementvisible = true">
+              Nutzungsbedingungen
+              / Datenschutzerklärung
+            </button>
+
+
+          </form>
+
+          <div class="dataagreement" *ngIf="dataagreementvisible">
+
+            <button class="btn btn-link small text-muted p-0 closeAgreement" style="text-decoration: none"
+                    (click)="dataagreementvisible = false">
+
+              <fa-icon [icon]="['fas', 'times']"></fa-icon>
+              Fenster Schliessen
+
+            </button>
+
+            <h2>Nutzungsbedingungen / Datenschutzerklärung</h2>
+            <h3>Wer sind wir</h3>
+            <p>Diese Webseite und deren Inhalt wird durch eine private Person ohne kommerzielle Interessen zur Verfügung
+              gestellt.
+              Verantwortliche Stelle im Sinne der Datenschutzgesetze, insbesondere der EU-Datenschutzgrundverordnung
+              (DSGVO), lautet:</p>
+
+            <p>
+              Samuel Pulfer <br>
+              Oberer Quai 66 <br>
+              2503 Biel <br>
+              E-Mail: samuelpulfer@gmail.com <br>
+              Webseite: https://trustie.medicaa.ch/<br>
+            </p>
+
+            <h3>Welche personenbezogenen Daten wir sammeln und warum wir sie sammeln</h3>
+            <p>Wenn Sie auf diese Webseite zugreifen werden automatisch Informationen allgemeiner Natur erfasst. Diese
+              Informationen werden im Server-Logfile erfasst und beinhalten die Art des Webbrowsers, das verwendete
+              Betriebssystem, den Domainnamen Ihres Internet-Service-Providers, Ihre IP-Adresse und ähnliches.
+              Dies aus folgendem Grund:</p>
+            <ul>
+              <li>Sicherstellung eines problemlosen Verbindungsaufbaus der Website
+              </li>
+              <li> Sicherstellung einer reibungslosen Nutzung unserer Website
+              </li>
+              <li>Auswertung der Systemsicherheit und -stabilität sowie
+              </li>
+              <li>zu weiteren administrativen Zwecken</li>
+            </ul>
+            <p>
+              Ihre Daten werden nicht verwendet, um Rückschlüsse auf Ihre Person zu ziehen. Informationen dieser Art
+              werden lediglich statistisch ausgewertet, um unseren Internetauftritt und die dahinterstehende Technik zu
+              optimieren.
+            </p>
+            <h3>Speicherdauer</h3>
+            <p>Die Daten werden gelöscht, sobald diese für den Zweck der Erhebung nicht mehr erforderlich sind. Dies ist
+              für die Daten, die der Bereitstellung der Webseite dienen, grundsätzlich der Fall, wenn die jeweilige
+              Sitzung beendet ist.</p>
+            <h3>Cookies</h3>
+            <p>
+              Falls Sie ein Konto haben und Sie sich auf dieser Website anmelden, werden wir ein temporäres Cookie
+              setzen, um festzustellen, ob Ihr Browser Cookies akzeptiert.
+              Wenn Sie sich anmelden, werden wir einige Cookies einrichten, um Ihre Anmeldeinformationen und
+              Anzeigeoptionen zu speichern. Anmelde-Cookies verfallen nach zwei Tagen und Cookies für die
+              Anzeigeoptionen nach einem Jahr. Falls Sie bei der Anmeldung „Angemeldet bleiben“ auswählen, wird Ihre
+              Anmeldung zwei Wochen lang aufrechterhalten. Mit der Abmeldung aus Ihrem Konto werden die Anmelde-Cookies
+              gelöscht.
+            </p>
+            <h3>Wie wir Ihre Daten schützen</h3>
+            <h4>SSL-Verschlüsselung</h4>
+            <p>
+              Um die Sicherheit Ihrer Daten bei der Übertragung zu schützen, verwenden wir dem aktuellen Stand der
+              Technik entsprechende Verschlüsselungsverfahren (z. B. SSL) über HTTPS.
+            </p>
+
+            <h4>Chatdaten</h4>
+            <p>
+              Bei einem Verschlüsselten Chat werden die Chatdaten für die Serverbetreiber unlesbar mithilfe des "Olm"
+              Protokols verschlüsselt abgelegt.
+              Die Entschlüsselungsschlüssel können entweder auf dem eigenen Geräte oder Verschlüsselt auf dem Server
+              abgelegt werden, um die Handhabung für mehrere Geräte zu vereinfachen.
+
+            </p>
+            <h4>Änderungen</h4>
+            <p>Wir können diese Datenschutzerklärung jederzeit ohne Vorankündigung anpassen. Es gilt die jeweils
+              aktuelle, auf unserer Website publizierte Fassung.</p>
+            <h4>Fragen an den Datenschutzbeauftragten</h4>
+            <p>
+              Wenn Sie Fragen zum Datenschutz haben, schreiben Sie uns bitte eine E-Mail oder wenden Sie sich direkt an
+              die für den Datenschutz zu Beginn der Datenschutzerklärung aufgeführten, verantwortlichen Person in
+              unserer Organisation.
+              Biel, 1.1.2022
+
+            </p>
+          </div>
+
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+
+  <div class="card  trustie-element chat-element" *ngIf="loggedIn" [ngClass]="loggedIn == true ? 'logged-in' : ''">
+    <div class="settings p-3 pb-3" *ngIf="settingsOpen" @myInsertRemoveTrigger>
+
+      <button class="btn btn-primary mt-2 btn-sm mb-2" (click)="settingsOpen = false" *ngIf="settingsOpen">
+        <fa-icon [icon]="['fas', 'arrow-left']" size="1x" class="text-white"></fa-icon>
+
+        Zurück zum Chat
+      </button>
+      <div class="row">
+
+        <h3>Einstellungen</h3>
+        <div class="col">
+          <div class="alert alert-success p-2 d-inline-block">
+            Die Einstellungen werden automatisch gespeichert.
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <h4>Darstellung</h4>
+          <h5>Schriftgrösse</h5>
+
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <button class="btn btn-primary" type="button" (click)="modifyFontSize(-0.1)">-</button>
+            </div>
+            <input type="text" class="form-control text-center" style="max-width: 80px;" [ngModel]="fontSize" readonly>
+            <div class="input-group-append">
+              <button class="btn btn-primary" type="button" (click)="modifyFontSize(+0.1)">+</button>
+            </div>
+          </div>
+
+
+          <div
+            class="mt-3" [ngStyle]="{ 'fontSize.em': fontSize }">
+
+
+            <b class="d-block">Obi-Wan Kenobi
+            </b>
+            <div class=" bg-light rounded py-2 px-3 me-3 w-50">Hello There
+              <div class="text-muted small text-nowrap mt-1">
+                4.2.2021 13:37
+              </div>
+            </div>
+          </div>
+
+
+          <h5 class="mt-3">Kontakt teilen</h5>
+          <p>Hier können sie ihren eigenen Kontakt per QR Code teilen:</p>
+          <img [src]="'https://api.qrserver.com/v1/create-qr-code/?data='+getUserIdJSON()+'&size=300x300&margin=0'"
+               alt="User QR" class="mb-1 img-fluid" style="max-width: 180px">
+
+
+        </div>
+        <div class="col">
+
+
+          <h4>Sicherheit</h4>
+          <h5>Verschlüsselungsschlüssel</h5>
+          <p>Kein Schlüssel geladen</p>
+
+          <button class="btn btn-primary btn-sm mb-2">Importieren</button>
+          <br>
+          <button class="btn btn-primary btn-sm mb-2" disabled>Exportieren</button>
+
+          <h5 class="mt-4">Angemeldete Geräte</h5>
+          <button class="btn btn-primary btn-sm">Geräte verifizieren</button>
+
+
+        </div>
+      </div>
+
+
+    </div>
+
+
+    <div class=" text-center bg-dark text-white call " [ngClass]="matrixCall ? 'call-open' : ''">
+      <span class="callname d-inline-block mb-2">
+        <fa-icon [icon]="['fas', 'phone-volume']" size="2x"
+                 class="text-white"></fa-icon> Anruf {{matrixCall?.direction == 'inbound' ? 'von' : 'mit'}}  {{mx.client.getRoom(matrixCall?.roomId)?.name}}
+      </span>
+
+      <button class="btn btn-success text-white  ms-2"
+              *ngIf="matrixCall?.direction == 'inbound' && matrixCall?.state == 'ringing'" (click)="answer()">
+
+        <fa-icon [icon]="['fas', 'phone']" class="text-white"></fa-icon>
+        Anruf annehmen
+      </button>
+      <button class="ms-2 btn btn-danger text-white" (click)="busyCall()">
+        <fa-icon [icon]="['fas', 'phone-slash']" class="text-white"></fa-icon>
+        Anruf
+
+        {{matrixCall?.direction == 'inbound' ? 'ablehnen' : 'stoppen'}} </button>
+
+    </div>
+    <div class="row g-0 border-top main-chat-window" *ngIf="ready">
+      <div class="col border-right pb-lg-5 menu-bar" [ngClass]="menuOpen ? 'open' : ''">
+
+
+        <div class="px-3 ">
+          <div class="flex-grow-1">
+
+            <div class="d-flex align-items-center mt-3 pb-1 text-center">
+
+              <button class="btn btn-primary me-5 ms-1 float-end menu-button" (click)="menuOpen = !menuOpen">
+                <fa-icon [icon]="['fas', 'times']"></fa-icon>
+                Menü schliessen
+              </button>
+
+              <fa-icon [icon]="faPeopleArrows" size="2x" class="me-2"></fa-icon>
+              <span class="h1 fw-bold mb-0">Trustie</span>
+
+
+            </div>
+
+            <div class="buttons">
+
+              <button class="btn btn-danger mt-2  d-block w-100 text-start" (click)="logout()"
+                      [ngStyle]="{ 'fontSize.em': fontSize }">
+                <fa-icon [icon]="['fas', 'sign-out-alt']" size="1x" class=" me-1" [fixedWidth]="true"></fa-icon>
+                Abmelden
+              </button>
+
+
+            </div>
+          </div>
+        </div>
+
+        <trst-contact [contacts]="mx.client.getRooms() || [] | sortRooms: search" [component]="this"
+                      [ngStyle]="{ 'fontSize.em': fontSize }"></trst-contact>
+        <hr class="d-block d-lg-none mt-1 mb-1">
+
+        <div class="px-3 ">
+          <div class="flex-grow-1">
+
+            <button class="btn btn-dark mt-2  d-block w-100 text-start mt-3" (click)="settingsOpen = true"
+                    [ngStyle]="{ 'fontSize.em': fontSize }">
+
+              <fa-icon [icon]="['fas', 'cogs']" size="1x" class=" me-1" [fixedWidth]="true"></fa-icon>
+              Einstellungen
+            </button>
+
+            <button class="btn btn-primary mt-2 d-block w-100 text-start" (click)="startQRScan()"
+                    [ngStyle]="{ 'fontSize.em': fontSize }">
+              <fa-icon [icon]="['fas', 'qrcode']" size="1x" class="me-1" [fixedWidth]="true"></fa-icon>
+              Neuer Kontakt
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="col-md-9 trustie-content" *ngIf="activeRoom == 'qr' && loggedIn"
+           [ngStyle]="{ 'fontSize.em': fontSize }">
+        <div class="py-2 px-2 border-bottom  top-bar" [ngStyle]="{ 'fontSize.em': fontSize }">
+          <div class="d-flex align-items-center py-1">
+
+            <button class="btn btn-primary me-3 ms-1 menu-button" (click)="menuOpen = !menuOpen">
+              <fa-icon [icon]="['fas', 'bars']"></fa-icon>
+              Menü
+            </button>
+            <h4 class="p-0 m-0 ms-2">
+              <fa-icon [icon]="['fas', 'qrcode']"></fa-icon>
+              QR Code Einscannen
+            </h4>
+          </div>
+          <p class="ps-2 pt-2">Scanne hier den QR Code, welchen du von deinem Arzt/deiner Ärztin oder anderen neuen
+            Kontakten erhalten hast, um einen
+            neuen Kontakt zu hinzuzufügen.</p>
+
+          <button class="btn btn-primary mb-3" (click)="qrOpen = !qrOpen">
+            <fa-icon [icon]="['fas', 'qrcode']"></fa-icon> QR Scanner <span
+            *ngIf="!qrOpen">starten</span> <span *ngIf="qrOpen">stoppen</span></button>
+          <div *ngIf="qrOpen">
+            <zxing-scanner #scanner
+                           [enable]="enabledScanner"
+              (camerasFound)="ngOnCameraFound($event)"
+              [device]="selectedCamera"
+              (scanSuccess)="scanSuccessHandler($event)"
+            ></zxing-scanner>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-md-9 trustie-content" *ngIf="activeRoom != 'qr'">
+        <div class="py-2 px-2 border-bottom top-bar" [ngStyle]="{ 'fontSize.em': fontSize }" @myInsertRemoveTrigger>
+          <div class="d-flex align-items-center ">
+
+            <div class="flex-grow-1 pl-2 py-1">
+
+              <button class="btn btn-primary me-3 ms-1 menu-button" (click)="menuOpen = !menuOpen">
+                <fa-icon [icon]="['fas', 'bars']"></fa-icon>
+                Menü
+              </button>
+              <div class=" roomTitleDesktop center ">
+                <fa-icon [icon]="['fas', 'users']" *ngIf="getCurrentRoomMembers() > 2"></fa-icon>
+
+                <fa-icon [icon]="['fas', 'user']" *ngIf="getCurrentRoomMembers() <= 2"></fa-icon>
+
+                <strong> {{getRoom(mx.client.getRooms(), activeRoom).name}}</strong>
+              </div>
+
+
+            </div>
+            <span *ngIf="getCurrentRoomMembers() == 2" class="me-2">
+                <button class="btn btn-primary text-white me-1 visually-hidden"
+                        (click)="enableEncryption(activeRoom)" *ngIf="getRoom(mx.client.getRooms(), activeRoom)">   <fa-icon
+                  [icon]="['fas', 'cogs']" class="text-white"></fa-icon>   </button>
+
+                   <button *ngIf="!matrixCall" class="btn btn-success text-white "
+                           (click)="call(getRoom(mx.client.getRooms(), activeRoom))">   <fa-icon
+                     [icon]="['fas', 'phone']" class="text-white"></fa-icon>  Anrufen</button>
+              </span>
+            <div>
+
+            </div>
+          </div>
+
+          <div class="roomTitleMobile text-center">
+            <fa-icon [icon]="['fas', 'users']" *ngIf="getCurrentRoomMembers() > 2"></fa-icon>
+
+            <fa-icon [icon]="['fas', 'user']" *ngIf="getCurrentRoomMembers() <= 2"></fa-icon>
+
+            <strong> {{getRoom(mx.client.getRooms(), activeRoom).name}}</strong>
+          </div>
+
+        </div>
+
+        <div class="position-relative chat-message-outer-wrapper" [ngStyle]="{ 'fontSize.em': fontSize }">
+          <div class="chat-messages text-break p-2 pb-0 " *ngIf="mx.client.getRooms().length > 0" #chatWindow
+               @myInsertRemoveTrigger>
+            <div class="chat-messsage-wrapper" [ngClass]="!loading ? '' : 'loading-messages'">
+
+
+              <div class="load-message text-center mb-4 mt-4">
+                <button *ngIf="this.getRoom(this.mx.client.getRooms(), this.activeRoom)?.oldState?.paginationToken"
+                        (click)="loadMessage()" class="btn btn-primary">
+                  <fa-icon [icon]="['fas', 'arrow-up']" class="text-white"></fa-icon>
+                  Mehr Nachrichten laden
+                </button>
+                <p *ngIf="!this.getRoom(this.mx.client.getRooms(), this.activeRoom)?.oldState?.paginationToken">
+                  Anfang des Chats
+                </p>
+
+              </div>
+              <div class="chat-single-message" [style]="'transition-delay:' + i * 2000 + 'ms'"
+                [ngClass]="event.getSender() == getRoom(mx.client.getRooms(), activeRoom).myUserId ? 'chat-message-right' : 'chat-message-left'"
+                *ngFor="let event of getRoom(mx.client.getRooms(), activeRoom).timeline; let i = index" @myInsertRemoveTrigger
+              >
+
+
+                <div *ngIf="event.getContent()['msgtype'] === 'm.text' && event.getContent()['body'] != ''"
+                     class="mt-4">
+
+                  <img *ngIf="this.mx.client.getUser(event.getSender()).avatarUrl" class="rounded-circle me-2"
+                       [src]="mx.client.mxcUrlToHttp(this.mx.client.getUser(event.getSender()).avatarUrl, 40,40, 'crop')"
+                       alt="Image" width="30" height="30">
+
+                  <b>{{this.mx.client.getUser(event.getSender()).displayName}}
+                  </b>
+                  <div class="flex-shrink-1 bg-light rounded py-2 px-3 me-3">
+                    <span *ngIf="hasUser(event.getContent()['body'])">
+                      <button class="btn btn-primary " (click)="addContact(hasUser(event.getContent()['body'])[0])">
+                                      <fa-icon [icon]="['fas', 'user-plus']" [fixedWidth]="true"></fa-icon>
+
+                        Kontakt
+                        {{hasUser(event.getContent()['body'])}} hinzufügen
+                      </button>
+                    </span>
+
+                    <span *ngIf="!hasUser(event.getContent()['body'])">
+                                 {{event.getContent()['body']}}
+                    </span>
+
+
+                    <div class="text-muted small text-nowrap mt-1">
+                      {{event.getTs() | date : "dd.MM.y H:mm"}}</div>
+                  </div>
+                </div>
+
+                <div *ngIf=" event.getContent()['msgtype'] == 'm.image'">
+
+
+                  <img *ngIf="this.mx.client.getUser(event.getSender()).avatarUrl" class="rounded-circle me-2"
+                       [src]="mx.client.mxcUrlToHttp(this.mx.client.getUser(event.getSender()).avatarUrl, 40,40, 'crop')"
+                       alt="Image" width="30" height="30">
+
+                  <b>
+                    {{this.mx.client.getUser(event.getSender()).displayName}}
+                  </b>
+
+                  <div class="flex-shrink-1 bg-light rounded py-2 px-3 me-3">
+                    <img [src]="mx.client.mxcUrlToHttp(event.getContent().url, 100,50, 'scale')" alt="Image"><br>
+                    {{event.getContent()['body']}}
+                    <div class="text-muted small text-nowrap mt-1">
+                      {{event.getTs() | date : "dd.MM.y H:mm"}}</div>
+                  </div>
+
+
+                </div>
+
+                <div *ngIf=" event.getContent()['msgtype'] == 'm.audio'">
+                  <b>
+                    {{this.mx.client.getUser(event.getSender()).displayName}}
+                  </b>
+                  <div class="flex-shrink-1 bg-light rounded py-2 px-3 me-3">
+
+                    <fa-icon [icon]="['fas', 'file-audio']" class="d-inline-block me-2" size="2x"></fa-icon>
+                    <audio [src]="mx.client.mxcUrlToHttp(event.getContent().url)" controls
+                           class="d-inline-block"></audio>
+
+                    <div class="text-muted small text-nowrap mt-1">
+                      {{event.getTs() | date : "dd.MM.y H:mm"}}</div>
+                  </div>
+
+                </div>
+
+
+                <div *ngIf="event.getType() == 'm.room.member' && event.getContent()['membership'] == 'join'"
+                     class=" text-break" [title]="event|json">
+
+                  <div class="flex-shrink-1 bg-light rounded py-2 px-3 me-3">
+                    <fa-icon [icon]="['fas', 'user']"></fa-icon>
+                    {{event.getContent()['displayname']}} ist dem Chat beigetreten.
+                    <div class="text-muted small text-nowrap mt-1">
+                      {{event.getTs() | date : "dd.MM.y H:mm"}}</div>
+                  </div>
+
+
+                </div>
+
+
+                <div *ngIf="event.getType() == 'm.room.member' && event.getContent()['membership'] == 'invite'"
+                     class=" " [title]="event|json">
+
+                  <div class="flex-shrink-1 bg-light rounded py-2 px-3 me-3">
+                    <fa-icon [icon]="['fas', 'user']"></fa-icon>
+                    {{event.getContent()['displayname']}} wurde zum Chat eingeladen.
+                    <div class="text-muted small text-nowrap mt-1">
+                      {{event.getTs() | date : "dd.MM.y H:mm"}}</div>
+                  </div>
+
+                </div>
+
+                <div *ngIf=" event.getContent()['msgtype'] == 'm.bad.encrypted'">
+                  <div class="flex-shrink-1 bg-light rounded py-2 px-3 me-3">
+                    <fa-icon [icon]="['fas', 'key']"></fa-icon>
+                    Verschlüsselte Nachricht
+                    <div class="text-muted small text-nowrap mt-2">
+                      {{event.getTs() | date : "dd.MM.y H:mm"}}</div>
+                  </div>
+
+                </div>
+
+
+                <div *ngIf="event.getType() == 'm.room.encrypted'">
+                  <div class="flex-shrink-1 bg-light rounded py-2 px-3 me-3">
+                    <fa-icon [icon]="['fas', 'key']"></fa-icon>
+                    Verschlüsselte Nachricht
+                    <div class="text-muted small text-nowrap mt-1">
+                      {{event.getTs() | date : "dd.MM.y H:mm"}}</div>
+                  </div>
+                </div>
+
+                <div *ngIf="event.getType() == 'm.room.name'">
+                  <div class="flex-shrink-1 bg-light rounded py-2 px-3 me-3">
+                    <fa-icon [icon]="['fas', 'user']"></fa-icon>
+                    Raum wurde auf {{event.getContent()['name']}} umbennant.
+                    <div class="text-muted small text-nowrap mt-1">
+                      {{event.getTs() | date : "dd.MM.y H:mm"}}</div>
+                  </div>
+                </div>
+
+
+                <div *ngIf="event.getType() == 'm.call.invite'">
+                  <div class="flex-shrink-1 bg-light rounded py-2 px-3 me-3">
+                    <fa-icon [icon]="['fas', 'user']"></fa-icon>
+                    Anruf gestartet
+                    <div class="text-muted small text-nowrap mt-1">
+                      {{event.getTs() | date : "dd.MM.y H:mm"}}</div>
+                  </div>
+
+                </div>
+
+                <div *ngIf="event.getType() == 'm.call.hangup'">
+                  <div class="flex-shrink-1 bg-light rounded py-2 px-3 me-3">
+                    <fa-icon [icon]="['fas', 'user']"></fa-icon>
+                    Anruf beendet
+                    <div class="text-muted small text-nowrap mt-1">
+                      {{event.getTs() | date : "dd.MM.y H:mm"}}</div>
+                  </div>
+
+                </div>
+                <div *ngIf="event.getType() == 'm.call.answer'">
+                  <div class="flex-shrink-1 bg-light rounded py-2 px-3 me-3">
+                    <fa-icon [icon]="['fas', 'user']"></fa-icon>
+                    Anruf angenommen
+                    <div class="text-muted small text-nowrap mt-1">
+                      {{event.getTs() | date : "dd.MM.y H:mm"}}</div>
+                  </div>
+
+                </div>
+
+
+                <div *ngIf=" event.getContent()['msgtype'] !== 'm.text'
+              && event.getContent()['msgtype'] !== 'm.image'
+              && event.getContent()['msgtype'] !== 'm.audio'
+              && event.getType() !== 'm.room.member'
+              && event.getType() !== 'm.room.name'
+              && event.getType() !== 'm.call.hangup'
+              && event.getType() !== 'm.call.candidates'
+              && event.getType() !== 'im.vector.modular.widgets'
+              && event.getType() !== 'm.call.invite'
+              && event.getType() !== 'm.call.answer'
+              && event.getType() !== 'm.call.select_answer'
+              && event.getType() !== 'm.room.encrypted'
+              &&  event.getContent()['msgtype'] !== 'm.bad.encrypted'
+              && false
+             " [title]="event|json">
+
+                  <div class="flex-shrink-1 bg-light rounded py-2 px-3 me-3">{{ event.getType()}}
+                    <div class="text-muted small text-nowrap mt-1">
+                      {{event.getTs() | date : "dd.MM.y H:mm"}}</div>
+                  </div>
+                </div>
+
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+
+
+        <form class="flex-grow-0 py-2 px-2 border-top chat-input" (submit)="sendMessage()"
+              [ngStyle]="{ 'fontSize.em': fontSize }" @myInsertRemoveTrigger>
+          <div class="contactList" *ngIf="contactsOpen">
+
+            <button class="btn btn-primary btn-sm me-1 btn-block d-block mb-1" type="button"
+                    (click)="shareContact(contact)" *ngFor="let contact of getContacts()">
+              <fa-icon [icon]="['fas', 'user']" [fixedWidth]="true"></fa-icon>
+
+              {{contact.displayName}}
+              <fa-icon [icon]="['fas', 'share']" [fixedWidth]="true"></fa-icon>
+
+            </button>
+
+
+          </div>
+
+          <div class="input-group">
+
+            <input type="file" name="upload" id="upload" class="file-upload visually-hidden"
+                   (change)="onFileSelect($event)" #FileSelectInputDialog>
+
+            <button class="btn btn-primary me-1" type="button" (click)="OpenAddFilesDialog()" title="Datei hochladen">
+              <fa-icon [icon]="['fas', 'image']" [fixedWidth]="true"></fa-icon>
+            </button>
+
+            <button class="btn btn-success me-1" type="button" (click)="toggleContacts()" title="Kontakt teilen">
+              <fa-icon [icon]="['fas', 'user-plus']" [fixedWidth]="true"></fa-icon>
+            </button>
+
+            <input type="text" class="form-control" name="message" placeholder="Nachricht eingeben..."
+                   [(ngModel)]="message" [ngStyle]="{ 'fontSize.em': fontSize }">
+
+            <button class="btn btn-primary btn-send" type="submit">
+
+              <span class="d-inline-block" #plane>
+              <fa-icon [icon]="['fas', 'paper-plane']" [fixedWidth]="true"></fa-icon></span>
+            </button>
+
+            <button class="btn btn-outline-dark border-0" type="button" (click)="startStopRecord()"
+                    title="Sprachaufnahme starten/stoppen"
+                    [ngClass]="isRecording ? 'btn-danger' : ''">
+
+              <fa-icon [icon]="['fas', 'stop']" *ngIf="isRecording" class="me-1" [fixedWidth]="true"></fa-icon>
+              <fa-icon [icon]="['fas', 'microphone']" [fixedWidth]="true"></fa-icon>
+            </button>
+
+          </div>
+        </form>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+

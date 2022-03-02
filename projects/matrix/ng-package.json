@@ -1,0 +1,33 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../dist/matrix",
+  "lib": {
+    "entryFile": "src/public-api.ts"
+  },
+  "allowedNonPeerDependencies": [
+    "@fortawesome/fontawesome-free",
+    "@fortawesome/angular-fontawesome",
+    "@fortawesome/fontawesome-svg-core",
+    "@fortawesome/free-solid-svg-icons",
+    "@matrix-org/olm",
+    "@types/matrix-js-sdk",
+    "ng-audio-recorder",
+    "@types/request",
+    "matrix-js-sdk",
+    "@zxing/browser",
+    "@zxing/library",
+    "@zxing/ngx-scanner",
+    "@fortawesome/angular-fontawesome",
+    "@fortawesome/fontawesome-svg-core",
+    "@fortawesome/free-solid-svg-icons",
+    "bootstrap",
+    "animejs",
+    "mic-recorder-to-mp3",
+    "bootstrap",
+    "crypto",
+    "path",
+    "stream",
+    "lamejs"
+  ],
+  "assets": ["./src/assets/**/*"]
+}

@@ -1,0 +1,41 @@
+site_name: Trustie
+
+site_url: https://github.com/medicaach/Trustie
+theme:
+  custom_dir: docs/overrides
+  features:
+    - navigation.instant
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - toc.integrate
+    - social
+  name: material
+  palette:
+    primary: #3459e6
+    accent: #3459e6
+  icon:
+    logo: material/chat-processing
+    repo: fontawesome/brands/github
+extra_css:
+  - stylesheets/extra.css
+extra_javascript:
+  - javascripts/extra.js
+
+markdown_extensions:
+  - footnotes
+  - abbr
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      linenums: true
+  - admonition
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - attr_list
+repo_url: https://github.com/medicaach/Trustie
+repo_name: Github
+edit_uri: 'edit/master/docs/'
+copyright: Copyright &copy; 2021
